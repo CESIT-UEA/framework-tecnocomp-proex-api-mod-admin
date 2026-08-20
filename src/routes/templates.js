@@ -20,10 +20,17 @@ const authorizeRole = require('../middleware/authorizeRole');
  */
 router.get("/templates", authMiddleware,authorizeRole(['adm','professor']), async (req, res) => {
   try {
-    console.log('TEMPLATES', templates)
-    const templates = await templateService.listarTemplates();
+    console.log("Teste ", req.query)
+      let page = parseInt(req.query.page)
+      let quantidadeItens = parseInt(req.query.quantidadeItens)
+      if (isNaN(page) || page < 1) page = 1;
+      if (isNaN(quantidadeItens) || quantidadeItens < 0) quantidadeItens = 2
+      const templates = await templateService.listaTemplatesPaginados(page, quantidadeItens);
+      const infoTemplates = await templateService.infoPaginacaoTemplates(quantidadeItens);
     
-    res.status(200).json(templates);
+    
+
+      res.status(200).json({templates, infoTemplates});
   } catch (error) {
     console.error("Erro ao listar templates:", error);
     res.status(500).json({ error: "Erro ao listar templates" });

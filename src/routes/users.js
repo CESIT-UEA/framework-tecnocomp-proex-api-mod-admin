@@ -255,13 +255,13 @@ router.patch('/users/:id/self', authMiddleware,authorizeRole(['adm','professor']
   }
 });
 
-router.get("/templates", authMiddleware,authorizeRole(['professor', 'adm']), async (req, res) => {
-  try {
-    const templates = await moduloService.listarModulosTemplates();
-    res.status(200).json(templates);
-  } catch (error) {
-    console.error("Erro ao listar templates:", error);
-    res.status(500).json({ error: "Erro ao listar templates" });
-  }
-});
+// router.get("/templates", authMiddleware,authorizeRole(['professor', 'adm']), async (req, res) => {
+//   try {
+//     const templates = await moduloService.listarModulosTemplates();
+//     res.status(200).json(templates);
+//   } catch (error) {
+//     console.error("Erro ao listar templates:", error);
+//     res.status(500).json({ error: "Erro ao listar templates" });
+//   }
+// });
 module.exports = router;

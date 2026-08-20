@@ -116,6 +116,8 @@ async function listarModulosTemplates() {
   }
 }
 
+
+
 async function obterModulosPaginadosPorUsuario(usuarioId, pagina = 1) {
   try {
     const limit = 3

@@ -20,6 +20,40 @@ async function listarTemplates() {
   }
 }
 
+
+async function listaTemplatesPaginados(pagina = 1, quantidadeItens = 2) {
+  try {
+    const limit = quantidadeItens;
+    const offset = (pagina - 1) * limit;
+
+    const templates = await Modulo.findAll({
+      where: { template: true },
+      offset: offset,
+      limit: limit,
+      attributes: ["id", "nome_modulo", "nome_url", "publicado"]
+    })
+
+    return templates
+  } catch (error) {
+    console.error("Erro ao listar templates:", error);
+    throw new Error("Erro ao listar templates");
+  }
+}
+
+async function infoPaginacaoTemplates(quantidadeItens) {
+  try {
+    const limit = quantidadeItens;
+    const totalRegistros = await Modulo.count({ where: { template: true }});
+    const totalPaginas = Math.ceil(totalRegistros / limit);
+    
+    return { totalPaginas, totalRegistros }
+  } catch (error) {
+    console.error('Erro ao buscar informações dos módulos', error)
+    throw new Error('Erro ao buscar informações dos módulos')
+  }
+}
+
+
 async function obterTemplatePorId(id) {
   try {
     const template = await Modulo.findByPk(id, {
@@ -197,6 +231,8 @@ async function clonarArquivoTopico(caminhoRelativoAntigo, novaPastaId){
 
 module.exports = {
   listarTemplates,
+  listaTemplatesPaginados,
+  infoPaginacaoTemplates,
   obterTemplatePorId,
   clonarTemplate,
   atualizarStatusTemplate,

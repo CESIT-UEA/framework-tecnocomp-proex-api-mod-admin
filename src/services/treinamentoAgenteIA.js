@@ -25,7 +25,7 @@ async function enviarArquivoParaTreinamentoAgenteIA(nomeModulo, idModulo, file){
             return response
         });
 
-        if (!resposta || !resposta.ok) throw new Error('Erro ao fazer requição no envio de arquivo para treinamento do agente!')
+        if (!resposta || !resposta.ok) throw new Error('Erro ao fazer requisição no envio de arquivo para treinamento do agente!')
 
         return resposta.json()
 
